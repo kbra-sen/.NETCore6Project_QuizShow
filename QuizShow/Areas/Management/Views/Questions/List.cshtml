@@ -1,0 +1,172 @@
+﻿@using QuizShow.Dto
+@model List<QuestionsDto>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">Sorular</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+
+    <div class="card">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" bis_skin_checked="1">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-ban"></i> Uyarı!</h5>
+                @TempData["Error"]
+            </div>
+        }
+        <div class="card-header">
+            <h3 class="card-title">Sorular</h3>
+
+            <div class="card-tools">
+                <a type="button" class="btn btn-primary" asp-action="Add" asp-area="Management" asp-controller="Questions" data-card-widget="collapse" title="Collapse">
+                    Soru Ekle
+                </a>
+
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 1%">
+                            #
+                        </th>
+                        <th style="width: 20%">
+                            Soru Sırası
+                        </th>
+                        <th style="width: 30%">
+                            Soru
+                        </th>
+                        <th>
+                            Puan Değeri
+                        </th>
+                        <th style="width: 8%" class="text-center">
+                            Durumu
+                        </th>
+                        <th style="width: 20%">
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (QuestionsDto item in @Model)
+                    {
+                        <tr>
+                            <td>
+                                #
+                            </td>
+                            <td>
+                                @item.Order
+                            </td>
+                            <td>
+                                <a>
+                                    @item.QuestDesc
+                                </a>
+                                <br />
+                                <small>
+                                    Zorluk :   @item.Degree
+                                </small>
+                            </td>
+                            <td class="project_progress">
+                                @item.Point
+                            </td>
+                            <td class="project-state">
+                                @*<span class="badge badge-success">Success</span>*@
+
+                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                    
+                                    @if(@item.ActivePassive == QuizShow.Enums.ActiveOrPassive.Active)
+                                    {
+                                        <input type="checkbox" checked   class="custom-control-input"   id="customSwitch_@item.ID">
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox"     class="custom-control-input"   id="customSwitch_@item.ID">
+                                
+                                    }
+
+                                    <label class="custom-control-label" for="customSwitch_@item.ID"> </label>
+                                </div>
+ 
+
+                            </td>
+                            <td class="project-actions text-right">
+                                 <a class="btn btn-primary btn-sm" asp-action="Add" asp-area="Management" asp-controller="Answers" asp-route-id="@item.ID">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    Cevap Ekle
+                                </a>
+                                <a class="btn btn-info btn-sm" asp-action="Update" asp-area="Management" asp-controller="Questions" asp-route-id="@item.ID">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    Güncelle
+                                </a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-area="Management" asp-controller="Questions" asp-route-id="@item.ID">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                    Sil
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+   
+    $( document ).ready(function() {
+      
+        $('[id*=customSwitch]').change(function() {
+            let id = +($(this).attr('id') || '').split('_').slice(-1).join()
+            let value = 0
+            if (this.checked) {
+                value = 1
+            }
+
+            UpdateFunc(id, value)
+        });
+             
+    });
+    function UpdateFunc(id, value)
+      {
+            
+            $.ajax({
+              url : '@Url.Action("UpdateStatus","Questions")',
+              type:"POST",
+              data : {id: id , value : value},
+              success: function(result)
+              {
+                  if(result)
+                  {
+                      if(value ==0)  $('[id*=customSwitch]').checked =true;
+                      else $('[id*=customSwitch]').checked =false;
+                  }
+              },
+               error: function (jqXHR, textStatus, errorThrown)
+                {
+
+                }
+           })
+          
+      }
+
+
+
+</script>

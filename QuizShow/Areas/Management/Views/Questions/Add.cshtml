@@ -1,0 +1,70 @@
+﻿
+
+@model (Questions q , List<Points> p)
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+             </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">Soru Ekle</li>
+                </ol>
+            </div>
+        </div>
+    </div> 
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Soru Ekle</h3>
+                    </div>
+                    <form method="POST" asp-action="Add" asp-area="Management" asp-controller="Questions">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Soru Sırası *</label>
+                                <input  asp-for="q.Order" class="form-control" type="number" >
+                                <span class="text-danger" asp-validation-for="q.Order"></span>
+                              </div>
+                            <div class="form-group">
+                                <label>Soru * </label>
+                                <textarea   asp-for="q.QuestDesc" class="form-control" rows="3"   ></textarea>
+                                 <span class="text-danger" asp-validation-for="q.QuestDesc"></span>
+                               </div>
+                            <div class="form-group">
+                                <label>  Puan Değeri * </label>
+                               
+                                <select class="form-control" asp-for="q.PointID" asp-items="@(new SelectList(Model.p,"ID","Point"))">
+                                   
+                                </select>
+                                 
+                            </div>
+                            <div class="form-group">
+                                <label>  Zorluk Derecesi *</label>
+                                <select class="form-control" asp-for="q.Degree"> 
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                </select> 
+                            </div>
+                       
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,25 @@
+﻿
+@model (List<Answers> answerList,QuestionsDto question, int questOrder)
+
+<p class="menu-item secondPageWidth flex-item-center-self"> @Model.questOrder  .Soru : @Model.question.Point PUAN </p>
+<div class="imgDiv">
+    <div class="rowSetting circle circleCenter">
+        <p id="sure"></p>
+    </div>
+    <div class="rowSetting"> <img src="~/logo1.jpeg" /></div>
+    <div class="rowSetting circle circleCenter">  <p>%50</p></div>
+</div>
+<div class="question-item">
+    <p class="menu-item secondPageWidth">@Model.question.QuestDesc</p>
+    @foreach (Answers item in Model.answerList)
+    {
+        <form asp-action="GameStart" asp-controller="Game" method="post">
+            <input asp-for="@Model.question.PointID" name="pointID" type="hidden">
+            <input asp-for="@item.ID" type="hidden" name="answerID">
+            <button type="submit" class="menu-item secondPageWidth"> @item.AnswerSymbol ) @item.AnswerDesc </button>
+
+        </form>
+        
+    }
+</div>
+ 

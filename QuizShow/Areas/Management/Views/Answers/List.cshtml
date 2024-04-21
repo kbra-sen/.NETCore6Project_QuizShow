@@ -1,0 +1,125 @@
+﻿@using QuizShow.Dto
+
+
+@model (Answers answer, List<Answers> ans, List<QuestionsDto> questions )
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">Soru Ekle</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" bis_skin_checked="1">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-ban"></i> Uyarı!</h5>
+                @TempData["Error"]
+            </div>
+        }
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Soru ve Cevap Görüntüleme Sayfası</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" asp-action="List" asp-area="Management" asp-controller="Answers">
+
+                            <div class="form-group">
+                                <label> Soru Seçiniz :    </label>
+
+                                <select class="form-control selectbox" asp-for="answer.QuestionID" asp-items="@(new SelectList(Model.questions,"ID","QuestDesc"))">
+                                </select>
+
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Cevapları Getir</button>
+                            </div>
+                        </form>
+                        @if (@Model.ans != null)
+                        {
+                            <table class="table table-striped projects">
+
+                                <tbody class="AddHTml">
+                                    @foreach (Answers item in @Model.ans)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @if (item.AnswerSymbol == QuizShow.Enums.AnswerSymbol.A)
+                                                {
+                                                    @("A")
+                                                    ;
+                                                }
+                                                else if (item.AnswerSymbol == QuizShow.Enums.AnswerSymbol.B)
+                                                {
+                                                    @("B")
+                                                    ;
+                                                }
+                                                else if (item.AnswerSymbol == QuizShow.Enums.AnswerSymbol.C)
+                                                {
+                                                    @("C")
+                                                    ;
+                                                }
+                                                else
+                                                {
+                                                    @("D")
+                                                    ;
+                                                }
+                                            </td>
+                                            <td>
+                                                @item.AnswerDesc
+
+                                            </td>
+                                            <td>
+                                                @if (item.Truth == QuizShow.Enums.Truth.Doğru)
+                                                {
+                                                    @("Doğru")
+                                                    ;
+                                                }
+                                                else
+                                                {
+                                                    @("Yanlış")
+                                                    ;
+                                                }
+
+                                            </td>
+
+                                            <td class="project-actions text-right">
+
+                                                <a class="btn btn-info btn-sm" asp-action="Update" asp-area="Management" asp-controller="Answers" asp-route-id="@item.ID" asp-route-questID="@item.QuestionID">
+                                                    <i class="fas fa-pencil-alt">
+                                                    </i>
+                                                    Güncelle
+                                                </a>
+                                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-area="Management" asp-controller="Answers" asp-route-id="@item.ID" asp-route-questID="@item.QuestionID">
+                                                    <i class="fas fa-trash">
+                                                    </i>
+                                                    Sil
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

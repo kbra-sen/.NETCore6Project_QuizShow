@@ -1,0 +1,74 @@
+﻿@model List<Points> 
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                 
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">Puanlar</li>
+                </ol>
+            </div>
+        </div>
+    </div> 
+</section>
+ 
+<section class="content">
+     
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Puanlar</h3>
+
+            <div class="card-tools">
+                <a type="button" class="btn btn-primary"  asp-action="Add" asp-area="Management" asp-controller="Points" data-card-widget="collapse" title="Collapse">
+                    Puan Ekle
+                </a>
+                 
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 1%">
+                            #
+                        </th>
+                        <th style="width: 20%">
+                             Soru Puan Değeri
+                        </th>
+                         
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Points item in @Model)
+                    {
+                         <tr>
+                        <td>
+                            #
+                        </td>
+                        <td>
+                           @item.Point
+                        </td>
+                         
+                        <td class="project-actions text-right">
+                            
+                            <a class="btn btn-info btn-sm"  asp-action="Update" asp-area="Management" asp-controller="Points" asp-route-id="@item.ID">
+                                <i class="fas fa-pencil-alt">
+                                </i>
+                                Güncelle
+                            </a>
+                            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-area="Management" asp-controller="Points" asp-route-id="@item.ID">
+                                <i class="fas fa-trash">
+                                </i>
+                                Sil
+                            </a>
+                        </td>
+                    </tr>
+                    }
+                   
+                </tbody>
+        </div>
+    </div>
+</section>
