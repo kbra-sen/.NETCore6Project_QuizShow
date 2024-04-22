@@ -18,39 +18,7 @@ namespace QuizShow.Areas.Management.Controllers
             _repoAnswers = repoAnswers;
             _repoQuestion= repoQuestions;
         }
-        //cevabı eksik olan sorular pasif olsun. PAsif sorular adı altında liste yap
-        //cevabı silince eksikleri kırmızı göstermeyi unutma
-        //soruyu silince cevaplarıda sildirmeyi unutma
-     /*   public IActionResult ValidationFunc(int type,int AnswerID,int QuestionID,Enums.AnswerSymbol symbol)
-        {
-            string Quest = "";
-            Questions q = _repoQuestion.GetQuestionByID(answer.QuestionID);
-            if (q != null)
-            {
-                Quest = "'" + q.QuestDesc + "' sorusunun";
-            }
-            else
-            {
-                Quest = "Bu Sorunun";
-            }
-            if (answer.Truth == Enums.Truth.Doğru && getAnswerTruth > 0)
-            {
-                TempData["Error"] = Quest + " doğru cevabı daha önce girilmiş!";
-                return View((new Answers(), answer.QuestionID));
-            }
-            if (type==1)
-            {
-                int count = _repoAnswers.AnswerCount(AnswerID);
-                if (count == 4)
-                {
-                    TempData["Error"] = "Bir soru için 4 den fazla cevap girilemez. Soruya ait cevapları aşağıdaki menüden günceleyebilir yada silebilirsiniz";
-                    
-                }
-            }
-
-            return   RedirectToAction("List", "Answers", new { area = "Management" });
-        }
-     */
+       
         public IActionResult List()
         {
             List<Answers> ans = null;

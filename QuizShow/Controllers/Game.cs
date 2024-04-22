@@ -34,8 +34,7 @@ namespace QuizShow.Controllers
             List<QuestionsDto> qList = _repoGameQuestions.getQuestionsWithPoint(p.Point);
             QuestionsDto q = _repoGameQuestions.getQuestionsRandom(p.Point, qList);
             return View((GetAnswers(q.ID), q, instance.GetQuestionNumber()));
-            //soru sayısı kısmını hallet
-            //cevabı olmayanların görünmemesini yada cevaplanmasını sağla
+            
         }
         [HttpPost]
         public IActionResult GameStart(int PointID, int answerID)
@@ -55,7 +54,7 @@ namespace QuizShow.Controllers
                     Point = p.Point,
                     State = 1
                 }) ;
-                //totali hesapla ve bitir.
+               
             }
 
         }
